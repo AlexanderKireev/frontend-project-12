@@ -17,10 +17,6 @@ const HomePage = () => {
   const { authHeader } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    console.log('disp');
-    dispatch(fetchChannels(authHeader));
-    dispatch(fetchMessages(authHeader));
-
     const socket = io();
     socket.on('newChannel', (payload) => {
       dispatch(channelsActions.addChannel(payload));
@@ -33,6 +29,12 @@ const HomePage = () => {
     socket.on('renameChannel', (payload) => {
       dispatch(channelsActions.updateChannel({ id: payload.id, changes: payload }));
     });
+  }, [authHeader, dispatch]);
+
+  useEffect(() => {
+    console.log('disp');
+    dispatch(fetchChannels(authHeader));
+    dispatch(fetchMessages(authHeader));
   }, [authHeader, dispatch]);
 
   return (
