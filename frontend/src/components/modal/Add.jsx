@@ -4,17 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 // import 'react-toastify/dist/ReactToastify.css';
 import { useFormik } from 'formik';
 import { Modal, Form, Button } from 'react-bootstrap';
-import * as yup from 'yup';
+// import * as yup from 'yup';
 import {
   addChannel,
   selectors as channelsSelectors,
   // actions as channelsActions,
 } from '../../store/slices/channelsSlice';
 // import { actions as modalActions } from '../../store/slices/modalSlice';
+import { getChannelValidationShema } from '../../validation';
+// import './modal.css';
 
-const Add = ({
-  closeModal,
-}) => {
+const Add = ({ closeModal }) => {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const { authHeader } = useSelector((state) => state.auth);
@@ -22,13 +22,7 @@ const Add = ({
   const { show } = useSelector((state) => state.modal);
 
   const channelNames = useSelector(channelsSelectors.selectAll).map((channel) => channel.name);
-
-  const validationSchema = yup.object({
-    name: yup.string().required('Обязательное поле').trim()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .notOneOf(channelNames, 'Должно быть уникальным'),
-  });
+  const validationSchema = getChannelValidationShema(channelNames);
 
   useEffect(() => {
     if (show) {
@@ -52,22 +46,12 @@ const Add = ({
     validationSchema,
     onSubmit: (value) => {
       const newChannel = { name: value.name.trim() };
-      dispatch(addChannel({ newChannel, authHeader }))
-        .then(() => {
-          // if (!data.error) {
-          //   // getSuccessToast('Канал создан');
-          //   // toast.success('Канал создан');
-          //   // hideModal();
-          //   // closeModal();
-          //   dispatch(channelsActions.setCurrentChannelId(data.payload.id));
-          // }
-          closeModal();
-        });
+      dispatch(addChannel({ newChannel, authHeader })).then(() => closeModal());
     },
   });
 
   return (
-    <Modal show={show} centered onHide={closeModal}>
+    <Modal style={{ top: '20%' }} show={show} onHide={closeModal}>
       <Modal.Header closeButton>
         <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>

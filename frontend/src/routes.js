@@ -5,4 +5,5 @@ export default {
   // usersPath: () => [apiPath, 'data'].join('/'),
   channelsPath: () => [apiPath, 'channels'].join('/'),
   messagesPath: () => [apiPath, 'messages'].join('/'),
+  channelPath: (id) => [apiPath, 'channels', id].join('/'),
 };

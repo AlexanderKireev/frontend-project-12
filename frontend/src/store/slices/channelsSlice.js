@@ -23,6 +23,15 @@ export const addChannel = createAsyncThunk(
   },
 );
 
+export const renameChannel = createAsyncThunk(
+  'channels/renameChannel',
+  async ({ editedChannel, id, authHeader }) => { // { name: 'new name channel' };
+    const response = await axios
+      .patch(routes.channelPath(id), editedChannel, { headers: authHeader });
+    return response.data; // => { id: '3', name: 'new channel name', removable: true }
+  },
+);
+
 const channelsAdapter = createEntityAdapter();
 // const initialState = channelsAdapter.getInitialState();
 // console.log(initialState);
@@ -41,6 +50,7 @@ const channelsSlice = createSlice({
       state.currentChannelId = payload;
     },
     addChannel: channelsAdapter.addOne,
+    updateChannel: channelsAdapter.updateOne,
   },
   extraReducers: (builder) => {
     builder
@@ -61,7 +71,21 @@ const channelsSlice = createSlice({
       })
       .addCase(addChannel.rejected, (state, action) => {
         state.loadingStatus = 'failed';
-        // https://redux-toolkit.js.org/api/createAsyncThunk#handling-thunk-errors
+        state.error = action.error;
+        toast.error('Ошибка соединения');
+      })
+      .addCase(renameChannel.pending, (state) => {
+        state.loadingStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(renameChannel.fulfilled, (state) => {
+        state.loadingStatus = 'idle';
+        state.error = null;
+        // state.currentChannelId = payload.id;
+        toast.success('Канал переименован');
+      })
+      .addCase(renameChannel.rejected, (state, action) => {
+        state.loadingStatus = 'failed';
         state.error = action.error;
         toast.error('Ошибка соединения');
       });

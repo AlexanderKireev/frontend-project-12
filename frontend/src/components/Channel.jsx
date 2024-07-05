@@ -9,6 +9,7 @@ import {
 } from 'react-bootstrap';
 // import { selectors } from '../store/slices/channelsSlice';
 import { actions as channelsActions } from '../store/slices/channelsSlice';
+import { actions as modalActions } from '../store/slices/modalSlice';
 
 const Channel = ({ channel, showModal }) => {
   const dispatch = useDispatch();
@@ -56,7 +57,9 @@ const Channel = ({ channel, showModal }) => {
             Удалить
           </Dropdown.Item>
           <Dropdown.Item
-            onClick={() => showModal('renaming', true, channel.name)}
+            // onClick={() => showModal('renaming', true, channel.name)}
+            onClick={() => dispatch(modalActions
+              .showModal({ type: 'renaming', show: true, channel }))}
             as="button"
           >
             Переименовать

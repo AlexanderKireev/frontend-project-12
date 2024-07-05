@@ -13,30 +13,19 @@ import { Form, InputGroup } from 'react-bootstrap';
 import sendButtonImg from '../assets/images/sendButton.svg';
 import { addMessage } from '../store/slices/messagesSlice';
 
-const MessageForm = ({ getErrorToast }) => {
+const MessageForm = () => {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const { authHeader, username } = useSelector((state) => state.auth);
   const { currentChannelId } = useSelector((state) => state.channels);
-  const { loadingStatus, error } = useSelector((state) => state.messages);
-  // console.log(currentChannelId);
-  // console.log('form');
-  // console.log(error);
+  const { loadingStatus } = useSelector((state) => state.messages);
+  const { type } = useSelector((state) => state.modal);
 
   useEffect(() => {
-    // setTimeout(() => {
-    console.log('focus');
-    inputRef.current.focus();
-    // }, '1');
-  }, [currentChannelId]);
-
-  useEffect(() => {
-    if (error) {
-      console.log('шибка');
-      getErrorToast('Ошибка соединения');
-      // inputRef.current.select();
+    if (!type) {
+      inputRef.current.focus();
     }
-  }, [error, getErrorToast]);
+  }, [type, currentChannelId]);
 
   const formik = useFormik({
     initialValues: { body: '' },

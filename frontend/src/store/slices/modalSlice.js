@@ -2,16 +2,16 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 
-const initialState = { type: null, show: false, channelName: '' };
+// const initialState = { type: null, show: false, channel: {} };
 
 const modalSlice = createSlice({
   name: 'modal',
-  initialState,
+  initialState: { type: null, show: false, channel: {} },
   reducers: {
     showModal(state, { payload }) {
       state.type = payload.type;
       state.show = payload.show;
-      state.channelName = payload.channelName;
+      state.channel = payload.channel;
       // console.log(state.type);
     },
     hideModal(state) {

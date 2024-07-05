@@ -2,6 +2,7 @@ import {
   createSlice, createEntityAdapter, createAsyncThunk,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import routes from '../../routes';
 
 export const fetchMessages = createAsyncThunk(
@@ -50,6 +51,7 @@ const messagesSlice = createSlice({
       .addCase(addMessage.rejected, (state, action) => {
         state.loadingStatus = 'failed';
         state.error = action.error;
+        toast.error('Ошибка соединения');
       });
   },
 });

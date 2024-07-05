@@ -1,6 +1,6 @@
 import { Button, Form, Card } from 'react-bootstrap';
 import React, { useEffect, useRef } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,15 +31,6 @@ const LoginPage = () => {
     inputRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    console.log(error);
-    if (error && error !== 401) {
-      toast.error('Ошибка соединения');
-    } else if (error === 401) {
-      inputRef.current.select();
-    }
-  }, [error]);
-
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -50,6 +41,8 @@ const LoginPage = () => {
         // if (data.meta.requestStatus === 'fulfilled') { // может быть так лучше? Тоже работает
         if (!data.error) {
           navigate('/');
+        } else {
+          inputRef.current.select();
         }
       });
     },
@@ -129,7 +122,7 @@ const LoginPage = () => {
               </div>
             </Card.Footer>
           </Card>
-          <ToastContainer />
+          {/* <ToastContainer /> */}
         </div>
       </div>
     </div>

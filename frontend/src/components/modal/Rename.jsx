@@ -1,65 +1,71 @@
-import React, { useRef, useEffect } from 'react';
-// import _ from 'lodash';
+import { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import {
-  Modal,
-  Form,
-  Button,
-} from 'react-bootstrap';
+import { Modal, Form, Button } from 'react-bootstrap';
+import { renameChannel, selectors as channelsSelectors } from '../../store/slices/channelsSlice';
+import { getChannelValidationShema } from '../../validation';
 
-// const generateOnSubmit = ({ setItems, onHide }) => (values) => {
-//   const item = { id: _.uniqueId(), body: values.body };
-//   setItems((items) => {
-//     items.push(item);
-//   });
-//   onHide();
-// };
-
-const Rename = ({ modalInfo, handleClose }) => {
-  const { channelName } = modalInfo;
-  // console.log(modalInfo);
-
+const Rename = ({ closeModal }) => {
   const inputRef = useRef();
+  const dispatch = useDispatch();
+  const { authHeader } = useSelector((state) => state.auth);
+  const { loadingStatus } = useSelector((state) => state.channels);
+  const { show, channel } = useSelector((state) => state.modal);
+
+  const channelNames = useSelector(channelsSelectors.selectAll).map((item) => item.name);
+  const validationSchema = getChannelValidationShema(channelNames);
+
+  useEffect(() => {
+    if (show) {
+      inputRef.current.select();
+    }
+  }, [show]);
+
   const formik = useFormik({
-    initialValues: { name: channelName },
-    onSubmit: (values) => {
-      console.log(values);
+    initialValues: { name: channel.name },
+    validationSchema,
+    onSubmit: (value) => {
+      const editedChannel = { name: value.name.trim() };
+      dispatch(renameChannel({ editedChannel, id: channel.id, authHeader }))
+        .then(() => closeModal());
     },
   });
 
-  useEffect(() => {
-    if (modalInfo.show) {
-      inputRef.current.select();
-    }
-  }, [modalInfo.show]);
-
   return (
-    <Modal show={modalInfo.show} centered onHide={handleClose}>
+    <Modal style={{ top: '20%' }} show={show} onHide={closeModal}>
       <Modal.Header closeButton>
         <Modal.Title>Переименовать канал</Modal.Title>
       </Modal.Header>
-
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <Form.Control
-              // required
               className="mb-2"
-              // placeholder="Ваш ник"
               ref={inputRef}
               onChange={formik.handleChange}
-              // onBlur={formik.handleBlur}
+              isInvalid={formik.touched.name && formik.errors.name}
               value={formik.values.name}
               name="name"
               id="name"
             />
             <Form.Label className="visually-hidden" htmlFor="name">Имя канала</Form.Label>
-            <Form.Control.Feedback type="invalid">Должно быть уникальным</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{formik.errors.name}</Form.Control.Feedback>
             <div className="d-flex justify-content-end">
-              <Button variant="secondary" onClick={handleClose} className="me-2">
+              <Button
+                disabled={loadingStatus === 'loading'}
+                variant="secondary"
+                onClick={closeModal}
+                className="me-2"
+              >
                 Отменить
               </Button>
-              <Button variant="primary" type="submit">Отправить</Button>
+              <Button
+                disabled={loadingStatus === 'loading'}
+                variant="primary"
+                type="submit"
+              >
+                Отправить
+              </Button>
             </div>
           </Form.Group>
         </Form>
@@ -69,4 +75,3 @@ const Rename = ({ modalInfo, handleClose }) => {
 };
 
 export default Rename;
-// END
