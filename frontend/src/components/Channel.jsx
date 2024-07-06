@@ -14,7 +14,7 @@ import { actions as modalActions } from '../store/slices/modalSlice';
 const Channel = ({ channel, showModal }) => {
   const dispatch = useDispatch();
   const { currentChannelId } = useSelector((state) => state.channels);
-  console.log('channel');
+  // console.log('channel');
 
   // const Handler = () => {
   //   console.log(currentChannelId);
