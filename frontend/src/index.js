@@ -25,8 +25,20 @@ i18n
 
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_TOKEN,
-  environment: 'production',
+  // environment: 'production',
+  environment: 'testenv',
 };
+
+// const rollbarConfig = {
+//   accessToken: '53acabe4f60a40e38d192cd32c6f00c0',
+
+//   environment: 'testenv',
+// };
+
+function TestError() {
+  const a = null;
+  return a.hello();
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +46,7 @@ root.render(
   <RollbarProvider config={rollbarConfig}>
     <ErrorBoundary>
       <Provider store={store}>
+        <TestError />
         <App />
         <ToastContainer />
       </Provider>
