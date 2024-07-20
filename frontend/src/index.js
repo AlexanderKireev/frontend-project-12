@@ -25,8 +25,8 @@ i18n
 
 const rollbarConfig = {
   accessToken: process.env.ROLLBAR_TOKEN,
-  // environment: 'production',
-  environment: 'testenv',
+  environment: 'production',
+  // environment: 'testenv',
 };
 
 // const rollbarConfig = {
