@@ -33,15 +33,13 @@ export default {
       loginError: 'Неверные имя пользователя или пароль',
       registerError: 'Такой пользователь уже существует',
 
-      //   },
-      //   validationErrors: {
-      //     incorrectLength: 'От 3 до 20 символов',
-      //     minPasswordLength: 'Не менее 6 символов',
-      //     notConfirmPassword: 'Пароли должны совпадать',
-      //     requiredFields: 'Обязательное поле',
-      //     incorrectRenameChannel: 'Должно быть уникальным',
-      //   },
-
+    },
+    validationErrors: {
+      incorrectLength: 'От 3 до 20 символов',
+      minPasswordLength: 'Не менее 6 символов',
+      notConfirmPassword: 'Пароли должны совпадать',
+      requiredField: 'Обязательное поле',
+      notUniqueNameChannel: 'Должно быть уникальным',
     },
     questions: {
       noAccount: 'Нет аккаунта?',
@@ -53,9 +51,9 @@ export default {
       main: 'на главную страницу',
     },
     toasts: {
-    //   channelDeleted: 'Канал удалён',
-    //   channelRenamed: 'Канал переименован',
-    //   channelCreated: 'Канал создан',
+      channelDeleted: 'Канал удалён',
+      channelRenamed: 'Канал переименован',
+      channelCreated: 'Канал создан',
       connectionError: 'Ошибка соединения',
     },
     messagesCount_zero: '{{count}} сообщений',

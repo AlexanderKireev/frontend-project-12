@@ -25,6 +25,7 @@ const LoginPage = () => {
   // пробовал закомментить 14 строку, пробовал убрать jpg,
   // даже пробовал закомментить useEffect,
   // но все равно рендер 2 раза. Не могу понять, почему?
+  // StrictMode отклчен
 
   useEffect(() => {
     inputRef.current.focus();
@@ -42,7 +43,7 @@ const LoginPage = () => {
         } else {
           inputRef.current.select();
           if (data.payload !== 401) {
-            toast.error('Ошибка соединения');
+            toast.error(t('toasts.connectionError'));
           }
           rollbar.error(data.payload);
         }
