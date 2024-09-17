@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import loginImage from '../assets/images/login.jpg';
 import { logIn } from '../store/slices/authSlice';
+import { ROUTES } from '../routes';
 
 const LoginPage = () => {
   const rollbar = useRollbar();
@@ -16,16 +17,6 @@ const LoginPage = () => {
   const { loadingStatus, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  // Вот здесь не могу понять, почему так происходит (вопрос куратору)
-  // если, например, в этом месте поставить console.log('login');
-  console.log('login');
-  // то видно, что при вводе символа в форме, рендеринг происходит несколько раз, а именно 2 раза
-  // я пробовал целиком закомментить второе input поле в форме, <Button>
-  // пробовал закомментить 14 строку, пробовал убрать jpg,
-  // даже пробовал закомментить useEffect,
-  // но все равно рендер 2 раза. Не могу понять, почему?
-  // StrictMode отклчен
 
   useEffect(() => {
     inputRef.current.focus();
@@ -39,7 +30,7 @@ const LoginPage = () => {
     onSubmit: (values) => {
       dispatch(logIn(values)).then((data) => {
         if (!data.error) {
-          navigate('/');
+          navigate(ROUTES.home);
         } else {
           inputRef.current.select();
           if (data.payload !== 401) {

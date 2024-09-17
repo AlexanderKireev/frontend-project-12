@@ -19,7 +19,7 @@ const Modal = () => {
     setTimeout(() => {
       dispatch(modalActions.resetModal());
     }, '100'); // 300ms waiting for modal-closing animation
-  }; // на 300ms не проходят тесты hexlet-check
+  };
 
   if (!type) {
     return null;

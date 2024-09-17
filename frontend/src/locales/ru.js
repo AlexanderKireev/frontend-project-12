@@ -12,6 +12,7 @@ export default {
     },
     buttons: {
       login: 'Войти',
+      logout: 'Выйти',
       register: 'Зарегистрироваться',
       addChannel: 'Добавить канал',
       channelControl: 'Управление каналом',
