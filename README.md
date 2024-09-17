@@ -1,5 +1,6 @@
 ### Hexlet tests and linter status, Codeclimate maintainability:
 [![Actions Status](https://github.com/AlexanderKireev/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AlexanderKireev/frontend-project-12/actions)
+[![Linter Status](https://github.com/AlexanderKireev/frontend-project-12/actions/workflows/eslint-check.yml/badge.svg)](https://github.com/AlexanderKireev/frontend-project-12/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/98b1aed19e7989fc109e/maintainability)](https://codeclimate.com/github/AlexanderKireev/frontend-project-12/maintainability)
 
 ## Проект "Чат" ("Chat")
