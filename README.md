@@ -8,7 +8,7 @@
 
 Проект выполнен в рамках обучения в компании "Хекслет" ("Hexlet Ltd.") на курсе "фронтенд-разработчик".
 
-Принят: ХХ ХХХХ 2024 года. Студент: Киреев Александр. Куратор: Шайдеров Игорь ("Hexlet Ltd.").
+Принят: 22 сентября 2024 года. Студент: Киреев Александр. Куратор: Шайдеров Игорь ("Hexlet Ltd.").
 
 [![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/assets/master/images/hexlet_logo128.png)](https://ru.hexlet.io/pages/about?utm_source=github&utm_medium=link&utm_campaign=java-package)
 
